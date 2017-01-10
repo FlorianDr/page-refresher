@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Page Refresher</title>
+    <style media="screen">
+        #iframe-1 {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            border-style: none;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <iframe id="iframe-1"></iframe>
+
+    <script>
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : sParameterName[1];
+                }
+            }
+        };
+
+        var setURL = function setURL(url) {
+            document.getElementById('iframe-1').src = url;
+        };
+
+        var url = getUrlParameter('url');
+        var time = (parseInt(getUrlParameter('time')) || 60) * 1000;
+        setURL(url);
+        setInterval(function() {
+            document.getElementById('iframe-1').contentDocument.location.reload(true);
+        }, time);
+    </script>
+</body>
+
+</html>
